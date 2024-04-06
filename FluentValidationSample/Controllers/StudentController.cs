@@ -17,6 +17,23 @@ namespace FluentValidationSample.Controllers
         }
 
 
+        [HttpGet]
+        public IActionResult GetAll()
+        {
+
+            List<GetAllStudentsResponseDto> model = _context.Students.Select(q => new GetAllStudentsResponseDto()
+            {
+                ID = q.ID,
+                Name = q.Name,
+                Surname = q.Surname,
+                Email = q.Email,
+                UniversityName = q.University.Name
+            }).ToList();
+
+            return Ok(model);
+        }
+
+
         [HttpPost]
         public IActionResult AddStudent(CreateStudentRequestDto requestModel)
         {
@@ -52,6 +69,23 @@ namespace FluentValidationSample.Controllers
             student.Phone = model.Phone;
             student.BirthDate = model.BirthDate;
             _context.SaveChanges();
+            return Ok();
+        }
+
+
+        [HttpDelete("{id}")]
+        public IActionResult DeleteStudent(int id)
+        {
+            Student student = _context.Students.FirstOrDefault(q => q.ID == id);
+
+            if (student == null)
+            {
+                return NotFound();
+            }
+
+            student.IsDeleted = true;
+            _context.SaveChanges();
+
             return Ok();
         }
 

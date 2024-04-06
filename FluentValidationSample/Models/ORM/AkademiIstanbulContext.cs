@@ -10,5 +10,6 @@ namespace FluentValidationSample.Models.ORM
         }
 
         public DbSet<Student> Students { get; set; }
+        public DbSet<University> Universities { get; set; }
     }
 }

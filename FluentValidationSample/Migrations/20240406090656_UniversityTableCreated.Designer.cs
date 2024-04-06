@@ -4,6 +4,7 @@ using FluentValidationSample.Models.ORM;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FluentValidationSample.Migrations
 {
     [DbContext(typeof(AkademiIstanbulContext))]
-    partial class AkademiIstanbulContextModelSnapshot : ModelSnapshot
+    [Migration("20240406090656_UniversityTableCreated")]
+    partial class UniversityTableCreated
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -57,12 +60,7 @@ namespace FluentValidationSample.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("UniversityId")
-                        .HasColumnType("int");
-
                     b.HasKey("ID");
-
-                    b.HasIndex("UniversityId");
 
                     b.ToTable("Students");
                 });
@@ -92,15 +90,6 @@ namespace FluentValidationSample.Migrations
                     b.HasKey("ID");
 
                     b.ToTable("Universities");
-                });
-
-            modelBuilder.Entity("FluentValidationSample.Models.ORM.Student", b =>
-                {
-                    b.HasOne("FluentValidationSample.Models.ORM.University", "University")
-                        .WithMany()
-                        .HasForeignKey("UniversityId");
-
-                    b.Navigation("University");
                 });
 #pragma warning restore 612, 618
         }
